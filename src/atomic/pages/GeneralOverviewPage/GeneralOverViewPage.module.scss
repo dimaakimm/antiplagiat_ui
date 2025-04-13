@@ -1,0 +1,10 @@
+@use '/src/variables' as *;
+
+.wrapper{
+  @include page-styles;
+  display: flex;
+  width: 100%;
+  gap: 15px;
+  flex: 1;
+  overflow-y: auto;
+}

@@ -1,0 +1,51 @@
+@use '/src/variables' as *;
+
+.worksTableWrapper{
+  @include block-styles;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.tableContainer {
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  th {
+    font-weight: bold;
+    top: 0;
+  }
+
+  .studentName {
+    font-weight: 500;
+  }
+
+  .percentageCell {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .highMatch {
+    color: #d32f2f;
+  }
+
+  .lowMatch {
+    color: #388e3c;
+  }
+
+}
+
+.tableRow{
+  cursor: pointer;
+}

@@ -1,0 +1,24 @@
+@use '/src/variables' as *;
+
+.headerWrapper{
+  @include header-styles;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mainInfo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.generalInfo{
+  display: flex;
+  gap: 20px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding-bottom: 10px;
+}

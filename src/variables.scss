@@ -1,0 +1,39 @@
+$blue-color: #243277;
+$dark-blue-color: #232237;
+$error-color: #b91919;
+$white-color: #ffffff;
+$black-color: #000000;
+$bright-gray-color: #f7f7f7;
+$gray-color: #d9d9d9;
+$light-gray-color: #a6a6a6;
+
+$br-small: 10px;
+$br-max: 1000px;
+$max-width: 1440px;
+
+$page-content-max-width: 1240px;
+$padding-s: 5px;
+$padding-m: 10px;
+$padding-l: 15px;
+
+
+@mixin block-styles {
+  background-color: $dark-blue-color;
+  border-radius: $br-small;
+  padding: $padding-l;
+  flex: 1;
+}
+
+@mixin page-styles {
+  padding: $padding-l;
+  flex: 1;
+}
+
+@mixin header-styles{
+  background-color: $dark-blue-color;
+  border-radius: $br-small;
+  margin: 15px 15px 0;
+  padding: $padding-l;
+}
+
+
