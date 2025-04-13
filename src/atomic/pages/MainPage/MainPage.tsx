@@ -11,7 +11,7 @@ const MainPage = () => {
             mainPage
             <div className={styles.projects}>
                 {projects.map((project) => (
-                    <div>
+                    <div className={styles.project}>
                         <Typography>{project.name}</Typography>
                         <Button onClick={() => navigate(project.link)}>
                             Перейти
