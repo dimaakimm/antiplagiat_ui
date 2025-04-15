@@ -1,12 +1,12 @@
 import styles from './ProjectHeader.module.scss'
-import { Outlet, useParams } from 'react-router-dom'
+import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import Button from '../../atoms/Button/Button.tsx'
 import Typography from '../../atoms/Typography/Typography.tsx'
 import { projectHeaderGeneralInfo } from '../../../mockedData/mockedProjectData.ts'
 
 const ProjectHeader = () => {
     const { id } = useParams<{ id: string }>()
-
+    const navigate = useNavigate()
     return (
         <>
             <div className={styles.headerWrapper}>
@@ -14,7 +14,7 @@ const ProjectHeader = () => {
                     <div className={styles.projectTitle}>
                         <Typography>Project: {id}</Typography>
                     </div>
-                    <Button>
+                    <Button onClick={() => navigate('/')}>
                         <Typography dType="r16">Выйти</Typography>
                     </Button>
                 </div>

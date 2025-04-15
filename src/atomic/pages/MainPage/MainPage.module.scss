@@ -1,9 +1,10 @@
-.projects{
+@use '/src/variables' as *;
+
+.wrapper{
+  @include page-styles;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.project{
-  display: flex;
-  justify-content: space-between;
+  width: 100%;
+  gap: 15px;
+  flex: 1;
+  overflow-y: auto;
 }

@@ -5,21 +5,13 @@ import {
     fetchBaseQuery,
     FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react'
+import { generateUUID } from '../utils/generateUUID.ts'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'https://pioneergas-manager.ru/api/v1',
     credentials: 'include',
     prepareHeaders: (headers) => {
-        // Получаем или генерируем UUID
-        let uuid = localStorage.getItem('Guest-UUID')
-
-        if (!uuid) {
-            uuid = self.crypto.randomUUID
-                ? self.crypto.randomUUID()
-                : Date.now().toString(36) +
-                  Math.random().toString(36).substring(2)
-            localStorage.setItem('Guest-UUID', uuid)
-        }
+        const uuid = localStorage.getItem('Guest-UUID') || generateUUID()
         headers.set('Guest-UUID', uuid)
 
         return headers
@@ -57,5 +49,4 @@ const baseQueryWithReauth: BaseQueryFn<
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
     endpoints: () => ({}),
-    tagTypes: ['Basket'],
 })

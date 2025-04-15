@@ -1,0 +1,15 @@
+@use '/src/variables' as *;
+
+.projects{
+  @include block-styles;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.project{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
