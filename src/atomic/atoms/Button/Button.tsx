@@ -9,6 +9,7 @@ interface ButtonProps {
     form?: 'default' | 'round'
     onClick?: MouseEventHandler<HTMLButtonElement>
     className?: string
+    actionType?: 'submit' | 'reset' | 'button'
 }
 const Button: React.FC<ButtonProps> = ({
     type = 'primary',
@@ -17,9 +18,11 @@ const Button: React.FC<ButtonProps> = ({
     Img,
     children,
     className,
+    actionType,
 }) => {
     return (
         <button
+            type={actionType}
             onClick={onClick}
             className={classNames(
                 styles.wrapper,

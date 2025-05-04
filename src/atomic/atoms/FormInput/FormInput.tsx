@@ -5,9 +5,10 @@ import Typography, { FontTypes } from '../Typography/Typography.tsx'
 
 interface ButtonProps {
     label?: string
+    name: string
     validator?: (val: string) => boolean
     value?: string | number
-    setValue?: (value: string | number) => void
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     className?: string
     placeholder?: string
     labelInColumn?: boolean
@@ -16,8 +17,9 @@ interface ButtonProps {
 
 const FormInput: React.FC<ButtonProps> = ({
     label = '',
+    name,
     value,
-    setValue,
+    onChange,
     className,
     placeholder,
     labelInColumn = false,
@@ -40,10 +42,11 @@ const FormInput: React.FC<ButtonProps> = ({
                 </Typography>
             )}
             <input
+                name={name}
                 className={styles.formInput__input}
                 value={value}
                 placeholder={placeholder}
-                onChange={(e) => setValue?.(e.target.value)}
+                onChange={onChange}
             />
         </div>
     )

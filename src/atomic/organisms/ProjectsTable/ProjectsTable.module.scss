@@ -13,3 +13,14 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.mainInfo{
+  display: flex;
+  justify-content: space-between;
+}
+
+.projectsTable{
+  display: grid;
+  grid-gap : 20px;
+}
+

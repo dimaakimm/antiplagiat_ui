@@ -36,4 +36,15 @@ $padding-l: 15px;
   padding: $padding-l;
 }
 
+@mixin modal-styles{
+  width: 50%;
+  height: 50%;
+  background-color: $dark-blue-color;
+  border-radius: $br-small;
+  padding: $padding-l;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+}
+
 

@@ -1,0 +1,13 @@
+@use '/src/variables' as *;
+
+.modal{
+  @include modal-styles;
+}
+
+.works{
+  display: flex;
+  justify-content: space-between;
+}
+.input{
+  width: 400px;
+}
