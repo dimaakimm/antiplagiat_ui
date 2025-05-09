@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-modal'
 import {
     Formik,
@@ -17,16 +17,27 @@ import {
     FormValues,
 } from './model/createProjectModal.types.ts'
 import { validationSchema } from './lib/projectsValidationSchema.ts'
+import Select from '../../atoms/Select/Select.tsx'
+import { useCreateProjectMutation } from '../../../api/projects/getProjects.ts'
 
 const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
     isOpen,
     onRequestClose,
 }) => {
     const initialValues: FormValues = {
-        participants: [
+        projectName: '',
+        repositoryUrls: [
             { fullName: '', github: '' },
             { fullName: '', github: '' },
         ],
+    }
+    const options = ['JAVA', 'CPP', 'PY', 'GO']
+    const [language, setLanguage] = useState(options[0])
+    const [createProject] = useCreateProjectMutation()
+    const onSubmit = async (values: FormValues) => {
+        const userId = localStorage.getItem('userId')
+        const request = { userId: userId, language: language }
+        console.log()
     }
 
     return (
@@ -36,8 +47,6 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
             onRequestClose={onRequestClose}
             contentLabel="Создание проекта"
         >
-            <Typography>Создание проекта</Typography>
-
             <Formik<FormValues>
                 validateOnChange={false}
                 initialValues={initialValues}
@@ -54,103 +63,161 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
                     errors,
                     touched,
                 }: FormikProps<FormValues>) => (
-                    <form onSubmit={handleSubmit}>
-                        <FieldArray name="participants">
-                            {({ push, remove }: FieldArrayRenderProps) => (
-                                <>
-                                    {values.participants.map(
-                                        (participant, index) => {
-                                            const participantErrors =
-                                                typeof errors.participants?.[
-                                                    index
-                                                ] === 'object'
-                                                    ? (errors.participants[
-                                                          index
-                                                      ] as FormikErrors<
-                                                          typeof participant
-                                                      >)
-                                                    : undefined
-
-                                            const participantTouched =
-                                                touched.participants?.[index]
-
-                                            return (
-                                                <div
-                                                    key={index}
-                                                    className={styles.works}
-                                                >
-                                                    <FormInput
-                                                        name={`participants[${index}].fullName`}
-                                                        className={styles.input}
-                                                        placeholder="ФИО проверяемого"
-                                                        value={
-                                                            participant.fullName
-                                                        }
-                                                        onChange={handleChange}
-                                                    />
-                                                    {participantTouched?.fullName &&
-                                                        participantErrors?.fullName && (
-                                                            <div
-                                                                className={
-                                                                    styles.error
-                                                                }
-                                                            >
-                                                                {
-                                                                    participantErrors.fullName
-                                                                }
-                                                            </div>
-                                                        )}
-
-                                                    <FormInput
-                                                        name={`participants[${index}].github`}
-                                                        className={styles.input}
-                                                        placeholder="Ссылка на гитхаб"
-                                                        value={
-                                                            participant.github
-                                                        }
-                                                        onChange={handleChange}
-                                                    />
-                                                    {participantTouched?.github &&
-                                                        participantErrors?.github && (
-                                                            <div
-                                                                className={
-                                                                    styles.error
-                                                                }
-                                                            >
-                                                                {
-                                                                    participantErrors.github
-                                                                }
-                                                            </div>
-                                                        )}
-
-                                                    {values.participants
-                                                        .length > 1 && (
-                                                        <Button
-                                                            actionType="button"
-                                                            onClick={() =>
-                                                                remove(index)
-                                                            }
-                                                        >
-                                                            Удалить участника
-                                                        </Button>
-                                                    )}
-                                                </div>
-                                            )
-                                        }
-                                    )}
-                                    <Button
-                                        actionType="button"
-                                        onClick={() =>
-                                            push({ fullName: '', github: '' })
-                                        }
-                                    >
-                                        Добавить участника
-                                    </Button>
-                                    <Button actionType="submit">Создать</Button>
-                                </>
+                    <>
+                        <div className={styles.modalHeader}>
+                            <Typography dType="r24">
+                                Создание проекта
+                            </Typography>
+                            {touched.projectName && errors.projectName && (
+                                <div className={styles.error}>
+                                    {errors.projectName}
+                                </div>
                             )}
-                        </FieldArray>
-                    </form>
+                            <FormInput
+                                value={values.projectName}
+                                name="projectName"
+                                onChange={handleChange}
+                                placeholder="Название проекта"
+                            />
+                        </div>
+                        <form onSubmit={handleSubmit} className={styles.form}>
+                            <FieldArray name="participants">
+                                {({ push, remove }: FieldArrayRenderProps) => (
+                                    <>
+                                        {values.participants.map(
+                                            (participant, index) => {
+                                                const participantErrors =
+                                                    typeof errors
+                                                        .participants?.[
+                                                        index
+                                                    ] === 'object'
+                                                        ? (errors.participants[
+                                                              index
+                                                          ] as FormikErrors<
+                                                              typeof participant
+                                                          >)
+                                                        : undefined
+
+                                                const participantTouched =
+                                                    touched.participants?.[
+                                                        index
+                                                    ]
+
+                                                return (
+                                                    <div
+                                                        key={index}
+                                                        className={styles.works}
+                                                    >
+                                                        <FormInput
+                                                            name={`participants[${index}].fullName`}
+                                                            className={
+                                                                styles.input
+                                                            }
+                                                            placeholder="ФИО проверяемого"
+                                                            value={
+                                                                participant.fullName
+                                                            }
+                                                            onChange={
+                                                                handleChange
+                                                            }
+                                                        />
+                                                        {participantTouched?.fullName &&
+                                                            participantErrors?.fullName && (
+                                                                <div
+                                                                    className={
+                                                                        styles.error
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        participantErrors.fullName
+                                                                    }
+                                                                </div>
+                                                            )}
+
+                                                        <FormInput
+                                                            name={`participants[${index}].github`}
+                                                            className={
+                                                                styles.input
+                                                            }
+                                                            placeholder="Ссылка на гитхаб"
+                                                            value={
+                                                                participant.github
+                                                            }
+                                                            onChange={
+                                                                handleChange
+                                                            }
+                                                        />
+                                                        {participantTouched?.github &&
+                                                            participantErrors?.github && (
+                                                                <div
+                                                                    className={
+                                                                        styles.error
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        participantErrors.github
+                                                                    }
+                                                                </div>
+                                                            )}
+
+                                                        {values.participants
+                                                            .length > 1 && (
+                                                            <Button
+                                                                actionType="button"
+                                                                onClick={() =>
+                                                                    remove(
+                                                                        index
+                                                                    )
+                                                                }
+                                                            >
+                                                                <Typography dType="r20">
+                                                                    Удалить
+                                                                    участника
+                                                                </Typography>
+                                                            </Button>
+                                                        )}
+                                                    </div>
+                                                )
+                                            }
+                                        )}
+                                        <Button
+                                            actionType="button"
+                                            onClick={() =>
+                                                push({
+                                                    fullName: '',
+                                                    github: '',
+                                                })
+                                            }
+                                        >
+                                            <Typography dType="r20">
+                                                Добавить участника
+                                            </Typography>
+                                        </Button>
+                                        <div className={styles.modalFooter}>
+                                            <div
+                                                className={styles.selectSection}
+                                            >
+                                                <Typography dType="r20">
+                                                    Выбор ЯП:
+                                                </Typography>
+                                                <Select
+                                                    options={options}
+                                                    onChange={setLanguage}
+                                                    value={language}
+                                                />
+                                            </div>
+
+                                            <Button actionType="submit">
+                                                <Typography dType="r20">
+                                                    Создать проект
+                                                </Typography>
+                                            </Button>
+                                        </div>
+                                    </>
+                                )}
+                            </FieldArray>
+                        </form>
+                    </>
                 )}
             </Formik>
         </Modal>

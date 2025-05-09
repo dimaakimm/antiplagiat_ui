@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import styles from './Select.module.scss'
 
 interface SelectProps {
     options: string[]
     value?: string
-    onChange?: (value: string) => void
+    onChange?: Dispatch<SetStateAction<string>>
 }
 
 const Select: React.FC<SelectProps> = ({ options, value, onChange }) => {
@@ -15,7 +15,7 @@ const Select: React.FC<SelectProps> = ({ options, value, onChange }) => {
             onChange={(e) => onChange?.(e.target.value)}
         >
             {options.map((option, index) => (
-                <option key={index} value={option}>
+                <option key={index} value={option} className={styles.option}>
                     {option}
                 </option>
             ))}

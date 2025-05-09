@@ -8,7 +8,7 @@ import {
 import { generateUUID } from '../utils/generateUUID.ts'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://pioneergas-manager.ru/api/v1',
+    baseUrl: 'http://localhost:8045/api/v1',
     credentials: 'include',
     prepareHeaders: (headers) => {
         const uuid = localStorage.getItem('Guest-UUID') || generateUUID()

@@ -4,6 +4,7 @@ export interface Participant {
 }
 
 export interface FormValues {
+    projectName: string
     participants: Participant[]
 }
 

@@ -3,4 +3,12 @@
 .select{
   all: unset;
   cursor: pointer;
+  background-color: $blue-color;
+  padding: 10px;
+  border-radius: $br-small;
+  text-align: center;
+}
+.option{
+  color: $dark-blue-color;
+  background-color: $white-color;
 }
