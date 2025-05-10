@@ -15,29 +15,30 @@ import Button from '../../atoms/Button/Button.tsx'
 import {
     CreateProjectModalProps,
     FormValues,
+    Participant,
 } from './model/createProjectModal.types.ts'
 import { validationSchema } from './lib/projectsValidationSchema.ts'
 import Select from '../../atoms/Select/Select.tsx'
-import { useCreateProjectMutation } from '../../../api/projects/getProjects.ts'
+import { useCreateProjectMutation } from '../../../api/projects/projectsApi.ts'
 
 const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
     isOpen,
     onRequestClose,
 }) => {
+    const [createProject] = useCreateProjectMutation()
     const initialValues: FormValues = {
         projectName: '',
-        repositoryUrls: [
+        participants: [
             { fullName: '', github: '' },
             { fullName: '', github: '' },
         ],
     }
     const options = ['JAVA', 'CPP', 'PY', 'GO']
     const [language, setLanguage] = useState(options[0])
-    const [createProject] = useCreateProjectMutation()
-    const onSubmit = async (values: FormValues) => {
-        const userId = localStorage.getItem('userId')
-        const request = { userId: userId, language: language }
-        console.log()
+    const userId = localStorage.getItem('userId')
+
+    function getGithubLinks(participants: Participant[]): string[] {
+        return participants.map((participant) => participant.github)
     }
 
     return (
@@ -51,8 +52,14 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
                 validateOnChange={false}
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={(values) => {
-                    console.log(values)
+                onSubmit={async (values) => {
+                    const data = {
+                        language: language,
+                        repositoryUrls: getGithubLinks(values.participants),
+                        name: values.projectName,
+                        userId: userId || '',
+                    }
+                    await createProject(data)
                     onRequestClose
                 }}
             >

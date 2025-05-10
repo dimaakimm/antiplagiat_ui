@@ -1,11 +1,13 @@
 import styles from './MainPage.module.scss'
-import { projects } from '../../../mockedData/mockedProjectData.ts'
 import ProjectsTable from '../../organisms/ProjectsTable/ProjectsTable.tsx'
+import { useGetProjectsQuery } from '../../../api/projects/projectsApi.ts'
 
 const MainPage = () => {
+    const { data } = useGetProjectsQuery(null)
+
     return (
         <div className={styles.wrapper}>
-            <ProjectsTable projects={projects} />
+            <ProjectsTable projects={data} />
         </div>
     )
 }

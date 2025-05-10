@@ -6,15 +6,15 @@ import { useNavigate } from 'react-router-dom'
 
 interface ProjectRowProps {
     name: string
-    link: string
+    id: number
 }
-const ProjectRow: React.FC<ProjectRowProps> = ({ name, link }) => {
+const ProjectRow: React.FC<ProjectRowProps> = ({ name, id }) => {
     const navigate = useNavigate()
 
     return (
         <div className={styles.project}>
             <Typography dType="r20">{name}</Typography>
-            <Button onClick={() => navigate(link)}>
+            <Button onClick={() => navigate('/project/' + id)}>
                 <Typography dType="r20">Перейти</Typography>
             </Button>
         </div>

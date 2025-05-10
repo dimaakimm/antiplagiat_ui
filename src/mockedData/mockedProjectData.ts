@@ -42,18 +42,3 @@ export const comparisons: { from: string; to: string; percentage: number }[] = [
     { from: 'Кузнецова Елена', to: 'Федоров Дмитрий', percentage: 18 },
     { from: 'Кузнецова Елена', to: 'Николаева Ольга', percentage: 55 },
 ]
-
-export const projects = [
-    {
-        name: 'Проект типо 3',
-        link: '/project/3',
-    },
-    {
-        name: 'Проект 444',
-        link: '/project/444',
-    },
-    {
-        name: 'Проект типо 31',
-        link: '/project/31',
-    },
-]

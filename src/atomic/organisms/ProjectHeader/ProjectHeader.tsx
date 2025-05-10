@@ -2,29 +2,37 @@ import styles from './ProjectHeader.module.scss'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import Button from '../../atoms/Button/Button.tsx'
 import Typography from '../../atoms/Typography/Typography.tsx'
-import { projectHeaderGeneralInfo } from '../../../mockedData/mockedProjectData.ts'
+import { useCompareRepositoriesQuery } from '../../../api/projects/projectsApi.ts'
+import { translations } from '../../../assets/translations.ts'
 
 const ProjectHeader = () => {
     const { id } = useParams<{ id: string }>()
     const navigate = useNavigate()
+    const { data: generealProjectData } = useCompareRepositoriesQuery(
+        Number(id)
+    )
+    console.log(generealProjectData)
+
     return (
         <>
             <div className={styles.headerWrapper}>
                 <div className={styles.mainInfo}>
                     <div className={styles.projectTitle}>
-                        <Typography>Project: {id}</Typography>
+                        <Typography dType="r32">Проект: {id}</Typography>
                     </div>
                     <Button onClick={() => navigate('/')}>
                         <Typography dType="r16">Выйти</Typography>
                     </Button>
                 </div>
-                <div className={styles.generalInfo}>
-                    {projectHeaderGeneralInfo.map((data) => (
-                        <Typography dType="r16">
-                            {data.statistics}: {data.value}
-                        </Typography>
-                    ))}
-                </div>
+                {generealProjectData && (
+                    <div className={styles.generalInfo}>
+                        {Object.entries(generealProjectData).map((data) => (
+                            <Typography dType="r16">
+                                {translations[data[0]]}: {data[1]}
+                            </Typography>
+                        ))}
+                    </div>
+                )}
             </div>
             <Outlet />
         </>

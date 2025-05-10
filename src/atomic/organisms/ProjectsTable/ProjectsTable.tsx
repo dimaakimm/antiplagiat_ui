@@ -6,7 +6,7 @@ import { useState } from 'react'
 import CreateProjectModal from '../CreateProjectModal/CreateProjectModal.tsx'
 
 interface ProjectsTableProps {
-    projects: { name: string; link: string }[]
+    projects?: { id: number; name: string; status: string }[]
 }
 const ProjectsTable: React.FC<ProjectsTableProps> = ({ projects }) => {
     const [modalIsOpen, setIsOpen] = useState(false)
@@ -21,11 +21,11 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ projects }) => {
                     <Button onClick={openModal}>Создать проект</Button>
                 </div>
                 <div className={styles.projectsTable}>
-                    {projects.map((project) => (
+                    {projects?.map((project) => (
                         <ProjectRow
                             name={project.name}
-                            link={project.link}
-                            key={project.link}
+                            id={project.id}
+                            key={project.id}
                         />
                     ))}
                 </div>
