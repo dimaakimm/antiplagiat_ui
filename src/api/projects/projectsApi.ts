@@ -32,6 +32,18 @@ interface compareRepositoriesResp {
     maxSimilarity: number
     averageSimilarity: number
 }
+
+export interface getMatchesResp {
+    firstRepositoryId: number
+    firstRepositoryOwner: string
+    secondRepositoryId: number
+    secondRepositoryOwner: string
+    percentage: number
+}
+interface getMatchesReq {
+    projectId: number
+}
+
 const userId = localStorage.getItem('userId')
 
 export const projectsApiSlice = apiSlice.injectEndpoints({
@@ -49,15 +61,9 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...regReq },
             }),
+            invalidatesTags: ['Projects'],
         }),
-        analyzeProjects: builder.mutation<createProjectResp, createProjectReq>({
-            query: (regReq) => ({
-                url: `${ApiFilesEndpoints.CREATE_PROJECT}`,
-                method: 'POST',
-                body: { ...regReq },
-            }),
-        }),
-        compareRepositories: builder.query<compareRepositoriesResp, number>({
+        compareRepositories: builder.query<compareRepositoriesResp[], number>({
             query: (projectId) => ({
                 url: `${ApiFilesEndpoints.PROJECT_COMPARE}/${projectId}`,
                 method: 'POST',
@@ -66,6 +72,13 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
         getProjects: builder.query<createProjectResp[], null>({
             query: () => ({
                 url: `${ApiFilesEndpoints.GET_ALL_PROJECTS}?userId=${userId}`,
+                method: 'GET',
+            }),
+            providesTags: ['Projects'],
+        }),
+        getMatches: builder.query<getMatchesResp[], getMatchesReq>({
+            query: ({ projectId }) => ({
+                url: `${ApiFilesEndpoints.GET_MATCHES}/${userId}/${projectId}`,
                 method: 'GET',
             }),
         }),
@@ -77,4 +90,5 @@ export const {
     useCreateProjectMutation,
     useGetProjectsQuery,
     useCompareRepositoriesQuery,
+    useGetMatchesQuery,
 } = projectsApiSlice

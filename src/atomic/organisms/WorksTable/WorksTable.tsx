@@ -1,15 +1,11 @@
 import styles from './WorksTable.module.scss'
 import Typography from '../../atoms/Typography/Typography.tsx'
 import React from 'react'
+import { getMatchesResp } from '../../../api/projects/projectsApi.ts'
 
-interface Comparison {
-    from: string
-    to: string
-    percentage: number
-}
-
-const WorksTable: React.FC<{ data: Comparison[] }> = ({
+const WorksTable: React.FC<{ data: getMatchesResp[]; isLoading: boolean }> = ({
     data: comparisons,
+    isLoading,
 }) => {
     return (
         <div className={styles.worksTableWrapper}>
@@ -34,12 +30,12 @@ const WorksTable: React.FC<{ data: Comparison[] }> = ({
                             <tr key={index} className={styles.tableRow}>
                                 <td className={styles.studentName}>
                                     <Typography dType="r14">
-                                        {pair.from}
+                                        {pair.firstRepositoryOwner}
                                     </Typography>
                                 </td>
                                 <td className={styles.studentName}>
                                     <Typography dType="r14">
-                                        {pair.to}
+                                        {pair.secondRepositoryOwner}
                                     </Typography>
                                 </td>
                                 <td

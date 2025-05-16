@@ -25,7 +25,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
     isOpen,
     onRequestClose,
 }) => {
-    const [createProject] = useCreateProjectMutation()
+    const [createProject, { isLoading, error }] = useCreateProjectMutation()
     const initialValues: FormValues = {
         projectName: '',
         participants: [
@@ -40,6 +40,8 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
     function getGithubLinks(participants: Participant[]): string[] {
         return participants.map((participant) => participant.github)
     }
+
+    console.log(error)
 
     return (
         <Modal
@@ -60,7 +62,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
                         userId: userId || '',
                     }
                     await createProject(data)
-                    onRequestClose
+                    onRequestClose()
                 }}
             >
                 {({
@@ -214,12 +216,31 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
                                                 />
                                             </div>
 
-                                            <Button actionType="submit">
+                                            <Button
+                                                actionType="submit"
+                                                disabled={isLoading}
+                                            >
                                                 <Typography dType="r20">
-                                                    Создать проект
+                                                    {isLoading
+                                                        ? 'Загрузка...'
+                                                        : 'Создать проект'}
                                                 </Typography>
                                             </Button>
                                         </div>
+                                        {error &&
+                                            'data' in error &&
+                                            typeof error.data === 'object' &&
+                                            error.data &&
+                                            'error' in error.data &&
+                                            typeof error.data?.error ===
+                                                'string' && (
+                                                <div className={styles.error}>
+                                                    <Typography>
+                                                        Ошибка:{' '}
+                                                        {error.data.error}
+                                                    </Typography>
+                                                </div>
+                                            )}
                                     </>
                                 )}
                             </FieldArray>

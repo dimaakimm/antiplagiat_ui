@@ -2,24 +2,27 @@ import React from 'react'
 import Chart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import styles from './Graphics.module.scss'
+import { getMatchesResp } from '../../../api/projects/projectsApi.ts'
 
-interface Comparison {
-    from: string
-    to: string
-    percentage: number
-}
-
-const Graphics: React.FC<{ data: Comparison[] }> = ({ data }) => {
+const Graphics: React.FC<{ data: getMatchesResp[]; isLoading: boolean }> = ({
+    data,
+    isLoading,
+}) => {
     const prepareChartData = () => {
         const allStudents = Array.from(
-            new Set(data.flatMap((item) => [item.from, item.to]))
+            new Set(
+                data.flatMap((item) => [
+                    item.firstRepositoryOwner,
+                    item.secondRepositoryOwner,
+                ])
+            )
         ).sort((a, b) => a.localeCompare(b))
         const matrix: number[][] = Array(allStudents.length)
             .fill(0)
             .map(() => Array(allStudents.length).fill(0))
         data.forEach((item) => {
-            const fromIndex = allStudents.indexOf(item.from)
-            const toIndex = allStudents.indexOf(item.to)
+            const fromIndex = allStudents.indexOf(item.firstRepositoryOwner)
+            const toIndex = allStudents.indexOf(item.secondRepositoryOwner)
             matrix[fromIndex][toIndex] = item.percentage
             matrix[toIndex][fromIndex] = item.percentage
         })

@@ -10,10 +10,12 @@ interface ButtonProps {
     onClick?: MouseEventHandler<HTMLButtonElement>
     className?: string
     actionType?: 'submit' | 'reset' | 'button'
+    disabled?: boolean
 }
 const Button: React.FC<ButtonProps> = ({
     type = 'primary',
     form = 'default',
+    disabled = false,
     onClick,
     Img,
     children,
@@ -22,6 +24,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
     return (
         <button
+            disabled={disabled}
             type={actionType}
             onClick={onClick}
             className={classNames(

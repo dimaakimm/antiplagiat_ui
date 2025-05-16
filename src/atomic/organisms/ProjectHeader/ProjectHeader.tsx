@@ -11,14 +11,12 @@ const ProjectHeader = () => {
     const { data: generealProjectData } = useCompareRepositoriesQuery(
         Number(id)
     )
-    console.log(generealProjectData)
-
     return (
         <>
             <div className={styles.headerWrapper}>
                 <div className={styles.mainInfo}>
                     <div className={styles.projectTitle}>
-                        <Typography dType="r32">Проект: {id}</Typography>
+                        <Typography dType="r32">ID проекта: {id}</Typography>
                     </div>
                     <Button onClick={() => navigate('/')}>
                         <Typography dType="r16">Выйти</Typography>
@@ -26,11 +24,14 @@ const ProjectHeader = () => {
                 </div>
                 {generealProjectData && (
                     <div className={styles.generalInfo}>
-                        {Object.entries(generealProjectData).map((data) => (
-                            <Typography dType="r16">
-                                {translations[data[0]]}: {data[1]}
-                            </Typography>
-                        ))}
+                        {Object.entries(generealProjectData).map(
+                            (data, index) => (
+                                <Typography dType="r16" key={index}>
+                                    {translations[data[0]]}:{' '}
+                                    {data[1].toString()}
+                                </Typography>
+                            )
+                        )}
                     </div>
                 )}
             </div>
