@@ -1,54 +1,51 @@
-# React + TypeScript + Vite
+# Frontend-часть Антиплагиата репозиториев 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🛠 Технологический стек
 
-Currently, two official plugins are available:
+- **React** — библиотека для создания пользовательских интерфейсов.
+- **TypeScript (TS)** — язык программирования с поддержкой статической типизации.
+- **Vite** — современный инструмент для сборки проектов.
+- **React Router DOM** — библиотека для маршрутизации в React-приложениях.
+- **Redux Toolkit** — инструмент для удобной работы с Redux.
+- **RTK Query** — инструмент для работы с API в Redux Toolkit.
+- **Prettier** — инструмент для автоматического форматирования кода.
+- **CSS Modules** — методология для стилизации компонентов с изоляцией классов.
+- **Apex Charts** — библиотека для работы с графиками и диаграммами.
+- **Atomic Design** — методология разделения компонентов (архитектура)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Как запустить проект?
 
-## Expanding the ESLint configuration
+### 1️⃣ Установка Node.js и npm:
+Перед началом убедитесь, что у вас установлен **Node.js**. Если нет, скачайте и установите его с [официального сайта](https://nodejs.org/).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Проверьте установку командой:
+```sh
+node -v
+npm -v
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2️⃣ Установка зависимостей:
+```sh
+npm install
+```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 3️⃣ Запуск проекта в режиме разработки:
+```sh
+npm run dev
+```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## 📂 Структура проекта
+
+```
+/src
+ ├── atomic/         # Декомпозированные UI-компоненты
+ │   ├── atoms/      # Простые базовые компоненты (кнопки, иконки, текстовые блоки)
+ │   ├── molecules/  # Компоненты, включающие в себя атомы
+ │   ├── organisms/  # Более сложные компоненты, включающие атомы и молекулы
+ │   └── pages/      # Страницы приложения
+ ├── store/          # Логика управления состоянием
+ ├── api/            # Запросы к API и взаимодействие с сервером
+ ├── assets/         # Статические файлы (иконки, изображения, шрифты)
+ ├── hooks/          # Пользовательские хуки для управления состоянием и поведением
+ └── main.tsx        # Точка входа в приложение
 ```

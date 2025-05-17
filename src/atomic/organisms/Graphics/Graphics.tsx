@@ -36,6 +36,9 @@ const Graphics: React.FC<{ data: getMatchesResp[]; isLoading: boolean }> = ({
     }
 
     const { students, matrix } = prepareChartData()
+    console.log(data)
+    console.log(students)
+    console.log(matrix)
 
     const options: ApexOptions = {
         chart: {
