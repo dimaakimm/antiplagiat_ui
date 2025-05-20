@@ -4,10 +4,7 @@ import { ApexOptions } from 'apexcharts'
 import styles from './Graphics.module.scss'
 import { getMatchesResp } from '../../../api/projects/projectsApi.ts'
 
-const Graphics: React.FC<{ data: getMatchesResp[]; isLoading: boolean }> = ({
-    data,
-    isLoading,
-}) => {
+const Graphics: React.FC<{ data: getMatchesResp[] }> = ({ data }) => {
     const prepareChartData = () => {
         const allStudents = Array.from(
             new Set(

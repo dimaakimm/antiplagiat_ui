@@ -7,13 +7,13 @@ import { useParams } from 'react-router-dom'
 const GeneralOverViewPage = () => {
     const { id } = useParams<{ id: string }>()
 
-    const { data: comparisons, isLoading } = useGetMatchesQuery({
+    const { data: comparisons } = useGetMatchesQuery({
         projectId: Number(id) || 1,
     })
     return (
         <div className={styles.wrapper}>
-            <Graphics data={comparisons || []} isLoading={isLoading} />
-            <WorksTable data={comparisons || []} isLoading={isLoading} />
+            <Graphics data={comparisons || []} />
+            <WorksTable data={comparisons || []} />
         </div>
     )
 }

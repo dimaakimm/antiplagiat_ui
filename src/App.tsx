@@ -6,6 +6,7 @@ import GeneralOverViewPage from './atomic/pages/GeneralOverviewPage/GeneralOverV
 import ProjectHeader from './atomic/organisms/ProjectHeader/ProjectHeader.tsx'
 import Header from './atomic/organisms/Header/Header.tsx'
 import GUIDAuth from './hooks/GUIDAuth.tsx'
+import ComparisonPage from './atomic/pages/ComparisonPage/ComparisonPage.tsx'
 
 function App() {
     return (
@@ -20,6 +21,10 @@ function App() {
                             <Route
                                 path="/project/:id"
                                 element={<GeneralOverViewPage />}
+                            />
+                            <Route
+                                path="/comparison/:id/"
+                                element={<ComparisonPage />}
                             />
                         </Route>
                     </Route>

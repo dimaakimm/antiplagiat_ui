@@ -3,9 +3,8 @@ import Typography from '../../atoms/Typography/Typography.tsx'
 import React from 'react'
 import { getMatchesResp } from '../../../api/projects/projectsApi.ts'
 
-const WorksTable: React.FC<{ data: getMatchesResp[]; isLoading: boolean }> = ({
+const WorksTable: React.FC<{ data: getMatchesResp[] }> = ({
     data: comparisons,
-    isLoading,
 }) => {
     return (
         <div className={styles.worksTableWrapper}>

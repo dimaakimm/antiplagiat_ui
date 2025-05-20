@@ -1,0 +1,6 @@
+@use '/src/variables' as *;
+
+.graphicsWrapper{
+  @include block-styles;
+  color: $black-color;
+}
