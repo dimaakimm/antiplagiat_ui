@@ -9,23 +9,31 @@ const Graphics: React.FC<{ data: getMatchesResp[] }> = ({ data }) => {
         const allStudents = Array.from(
             new Set(
                 data.flatMap((item) => [
-                    item.firstRepositoryOwner,
-                    item.secondRepositoryOwner,
+                    `${item.firstRepositoryOwner}(${item.firstRepositoryId})`,
+                    `${item.secondRepositoryOwner}(${item.secondRepositoryId})`,
                 ])
             )
         ).sort((a, b) => a.localeCompare(b))
+
         const matrix: number[][] = Array(allStudents.length)
             .fill(0)
             .map(() => Array(allStudents.length).fill(0))
+
         data.forEach((item) => {
-            const fromIndex = allStudents.indexOf(item.firstRepositoryOwner)
-            const toIndex = allStudents.indexOf(item.secondRepositoryOwner)
-            matrix[fromIndex][toIndex] = item.percentage
-            matrix[toIndex][fromIndex] = item.percentage
+            const fromLabel = `${item.firstRepositoryOwner}(${item.firstRepositoryId})`
+            const toLabel = `${item.secondRepositoryOwner}(${item.secondRepositoryId})`
+            const fromIndex = allStudents.indexOf(fromLabel)
+            const toIndex = allStudents.indexOf(toLabel)
+            if (fromIndex !== -1 && toIndex !== -1) {
+                matrix[fromIndex][toIndex] = item.percentage
+                matrix[toIndex][fromIndex] = item.percentage
+            }
         })
+
         for (let i = 0; i < allStudents.length; i++) {
             matrix[i][i] = 100
         }
+
         return {
             students: allStudents,
             matrix,
@@ -33,7 +41,6 @@ const Graphics: React.FC<{ data: getMatchesResp[] }> = ({ data }) => {
     }
 
     const { students, matrix } = prepareChartData()
-    console.log(data)
     console.log(students)
     console.log(matrix)
 
