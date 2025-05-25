@@ -4,4 +4,6 @@ export const enum ApiFilesEndpoints {
     CREATE_PROJECT = '/project/create',
     GET_ALL_PROJECTS = '/user/all/project',
     GET_MATCHES = '/project/all/match/repository',
+    GET_SUSPICIOUS = '/repository/suspicious',
+    GET_SUSPICIOUS_FILE = '/project/suspicious/file',
 }

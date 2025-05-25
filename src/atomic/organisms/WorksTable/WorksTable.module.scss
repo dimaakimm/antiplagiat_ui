@@ -44,8 +44,12 @@
     color: #388e3c;
   }
 
+
 }
 
 .tableRow{
   cursor: pointer;
+      &:hover {
+        background-color: $blue-color;
+      }
 }

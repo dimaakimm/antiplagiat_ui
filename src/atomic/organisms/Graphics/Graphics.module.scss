@@ -2,5 +2,8 @@
 
 .graphicsWrapper{
   @include block-styles;
+  display: flex;
+  flex-direction: column;
   color: $black-color;
+  gap: 40px;
 }

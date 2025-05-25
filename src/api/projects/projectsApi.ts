@@ -43,18 +43,33 @@ export interface getMatchesResp {
 interface getMatchesReq {
     projectId: number
 }
+interface getSuspiciousReq {
+    projectId: string
+    firstRepositoryId: string
+    secondRepositoryId: string
+}
+interface getSuspiciousFileResp {
+    id: string
+    percentage: string
+    firstFileId: string
+    firstRepositoryId: string
+    firstFileName: string
+    secondFileId: string
+    secondFileName: string
+    secondRepositoryId: string
+    tiles: {
+        startLineInFirstFile: string
+        endLineInFirstFile: string
+        endLineInSecondFile: string
+        textInFirstFile: string
+        textInSecondFile: string
+    }[]
+}
 
 const userId = localStorage.getItem('userId')
 
 export const projectsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        register: builder.query<RegResp, RegReq>({
-            query: (regReq) => ({
-                url: `${ApiFilesEndpoints.REGISTER}`,
-                method: 'POST',
-                body: { ...regReq },
-            }),
-        }),
         createProject: builder.mutation<createProjectResp, createProjectReq>({
             query: (regReq) => ({
                 url: `${ApiFilesEndpoints.CREATE_PROJECT}`,
@@ -62,6 +77,13 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
                 body: { ...regReq },
             }),
             invalidatesTags: ['Projects'],
+        }),
+        register: builder.query<RegResp, RegReq>({
+            query: (regReq) => ({
+                url: `${ApiFilesEndpoints.REGISTER}`,
+                method: 'POST',
+                body: { ...regReq },
+            }),
         }),
         compareRepositories: builder.query<compareRepositoriesResp[], number>({
             query: (projectId) => ({
@@ -82,6 +104,28 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             }),
         }),
+        getSuspiciousFiles: builder.query<
+            { id: string; name: string }[],
+            getSuspiciousReq
+        >({
+            query: ({ projectId, firstRepositoryId, secondRepositoryId }) => ({
+                url: `${ApiFilesEndpoints.GET_SUSPICIOUS}/${projectId}/${firstRepositoryId}/${secondRepositoryId}`,
+                method: 'GET',
+            }),
+        }),
+        getSuspiciousFile: builder.query<
+            getSuspiciousFileResp[],
+            {
+                fileId: string
+                firstRepositoryId: string
+                secondRepositoryId: string
+            }
+        >({
+            query: ({ fileId, firstRepositoryId, secondRepositoryId }) => ({
+                url: `${ApiFilesEndpoints.GET_SUSPICIOUS_FILE}/${fileId}/${firstRepositoryId}/${secondRepositoryId}`,
+                method: 'GET',
+            }),
+        }),
     }),
 })
 
@@ -91,4 +135,6 @@ export const {
     useGetProjectsQuery,
     useCompareRepositoriesQuery,
     useGetMatchesQuery,
+    useGetSuspiciousFilesQuery,
+    useGetSuspiciousFileQuery,
 } = projectsApiSlice

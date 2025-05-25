@@ -23,7 +23,7 @@ function App() {
                                 element={<GeneralOverViewPage />}
                             />
                             <Route
-                                path="/comparison/:id/"
+                                path="/comparison/:projectId/:firstRepositoryId/:secondRepositoryId"
                                 element={<ComparisonPage />}
                             />
                         </Route>

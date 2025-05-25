@@ -41,8 +41,6 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
         return participants.map((participant) => participant.github)
     }
 
-    console.log(error)
-
     return (
         <Modal
             className={styles.modal}
@@ -61,8 +59,10 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
                         name: values.projectName,
                         userId: userId || '',
                     }
-                    await createProject(data)
-                    onRequestClose()
+                    const response = await createProject(data)
+                    if (!('error' in response)) {
+                        onRequestClose()
+                    }
                 }}
             >
                 {({
@@ -235,7 +235,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
                                             typeof error.data?.error ===
                                                 'string' && (
                                                 <div className={styles.error}>
-                                                    <Typography>
+                                                    <Typography color={'red'}>
                                                         Ошибка:{' '}
                                                         {error.data.error}
                                                     </Typography>

@@ -1,8 +1,9 @@
-import React from 'react'
-import Chart from 'react-apexcharts'
-import { ApexOptions } from 'apexcharts'
+import React, { useState } from 'react'
 import styles from './Graphics.module.scss'
 import { getMatchesResp } from '../../../api/projects/projectsApi.ts'
+import Heatmap from '../../molecules/Heatmap/Heatmap.tsx'
+import Linegraph from '../../molecules/LineGraph/Linegraph.tsx'
+import Select from '../../atoms/Select/Select.tsx'
 
 const Graphics: React.FC<{ data: getMatchesResp[] }> = ({ data }) => {
     const prepareChartData = () => {
@@ -31,7 +32,7 @@ const Graphics: React.FC<{ data: getMatchesResp[] }> = ({ data }) => {
         })
 
         for (let i = 0; i < allStudents.length; i++) {
-            matrix[i][i] = 100
+            matrix[i][i] = 1
         }
 
         return {
@@ -41,109 +42,18 @@ const Graphics: React.FC<{ data: getMatchesResp[] }> = ({ data }) => {
     }
 
     const { students, matrix } = prepareChartData()
-    console.log(students)
-    console.log(matrix)
-
-    const options: ApexOptions = {
-        chart: {
-            type: 'heatmap',
-            toolbar: {
-                show: true,
-                tools: {
-                    download: true,
-                    selection: true,
-                    zoom: true,
-                    zoomin: true,
-                    zoomout: true,
-                    pan: true,
-                    reset: true,
-                },
-            },
-        },
-        plotOptions: {
-            heatmap: {
-                shadeIntensity: 0.5,
-                colorScale: {
-                    ranges: [
-                        { from: 0, to: 30, color: '#00E396', name: 'Низкое' },
-                        { from: 31, to: 70, color: '#FEB019', name: 'Среднее' },
-                        {
-                            from: 71,
-                            to: 100,
-                            color: '#FF4560',
-                            name: 'Высокое',
-                        },
-                    ],
-                },
-            },
-        },
-        dataLabels: {
-            enabled: true,
-            style: {
-                fontSize: '10px',
-                colors: ['#000'],
-            },
-        },
-        xaxis: {
-            type: 'category',
-            categories: students,
-            labels: {
-                rotate: -45,
-                style: {
-                    fontSize: '10px',
-                    colors: '#ffffff',
-                },
-            },
-        },
-        yaxis: {
-            labels: {
-                style: {
-                    colors: '#ffffff',
-                    fontSize: '10px',
-                },
-            },
-        },
-        legend: {
-            fontSize: '14px',
-            labels: {
-                colors: '#ffffff',
-                useSeriesColors: false,
-            },
-        },
-        tooltip: {
-            enabled: true,
-            custom: function ({
-                seriesIndex,
-                dataPointIndex,
-            }: {
-                seriesIndex: number
-                dataPointIndex: number
-            }) {
-                return `<div class="apexcharts-tooltip">
-          <div>${students[seriesIndex]} vs ${students[dataPointIndex]}</div>
-          <div>Совпадение: ${matrix[seriesIndex][dataPointIndex]}%</div>
-        </div>`
-            },
-        },
-    }
-
-    const series: ApexAxisChartSeries = students.map((student, index) => ({
-        name: student,
-        data: matrix[index].map((value, i) => ({
-            x: students[i],
-            y: value,
-        })),
-    }))
+    const options = ['Попарное сравнение', 'Среднее совпадение']
+    const [graphic, setGraphic] = useState(options[0])
 
     return (
         <div className={styles.graphicsWrapper}>
-            <Chart
-                options={options}
-                series={series}
-                type="heatmap"
-                height={600}
-                width="100%"
-            />
+            <Select options={options} onChange={setGraphic} value={graphic} />
+            {graphic === options[0] && (
+                <Heatmap matrix={matrix} students={students} />
+            )}
+            {graphic === options[1] && (
+                <Linegraph matrix={matrix} students={students} />
+            )}
         </div>
     )
 }

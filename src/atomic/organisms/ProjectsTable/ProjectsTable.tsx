@@ -7,8 +7,14 @@ import CreateProjectModal from '../CreateProjectModal/CreateProjectModal.tsx'
 
 interface ProjectsTableProps {
     projects?: { id: number; name: string; status: string }[]
+    isError: boolean
+    isLoading: boolean
 }
-const ProjectsTable: React.FC<ProjectsTableProps> = ({ projects }) => {
+const ProjectsTable: React.FC<ProjectsTableProps> = ({
+    projects,
+    isError,
+    isLoading,
+}) => {
     const [modalIsOpen, setIsOpen] = useState(false)
     const openModal = () => setIsOpen(true)
     const closeModal = () => setIsOpen(false)
@@ -21,13 +27,20 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ projects }) => {
                     <Button onClick={openModal}>Создать проект</Button>
                 </div>
                 <div className={styles.projectsTable}>
-                    {projects?.map((project) => (
-                        <ProjectRow
-                            name={project.name}
-                            id={project.id}
-                            key={project.id}
-                        />
-                    ))}
+                    {projects &&
+                        projects?.map((project) => (
+                            <ProjectRow
+                                name={project.name}
+                                id={project.id}
+                                key={project.id}
+                            />
+                        ))}
+                    {isError && (
+                        <Typography className={styles.error}>
+                            Возникла ошибка при загрузке проектов
+                        </Typography>
+                    )}
+                    {isLoading && <Typography>Идет загрузка...</Typography>}
                 </div>
             </div>
             <CreateProjectModal
