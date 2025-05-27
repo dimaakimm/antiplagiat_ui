@@ -98,3 +98,19 @@
   white-space: pre-wrap;
   overflow-x: auto;
 }
+
+.highlighted {
+  position: relative;
+  display: inline;
+  background-color: darkblue;
+}
+
+.highlightedBg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40%;
+  background-color: rgba(255, 255, 0, 0.3);
+  z-index: -1;
+}

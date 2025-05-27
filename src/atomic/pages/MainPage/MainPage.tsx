@@ -4,7 +4,11 @@ import { useGetProjectsQuery } from '../../../api/projects/projectsApi.ts'
 
 const MainPage = () => {
     const { data, isLoading, isError } = useGetProjectsQuery(null)
-
+    // const { data: wdwad } = useRegisterQuery({
+    //     name: 'wdqwf',
+    //     email: 'string',
+    //     password: 'string',
+    // })
     return (
         <div className={styles.wrapper}>
             <ProjectsTable

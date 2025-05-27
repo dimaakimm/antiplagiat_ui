@@ -58,9 +58,9 @@ interface getSuspiciousFileResp {
     secondFileName: string
     secondRepositoryId: string
     tiles: {
-        startLineInFirstFile: string
-        endLineInFirstFile: string
-        endLineInSecondFile: string
+        textAfterInFirstFile: string
+        textBeforeInFirstFile: string
+        textAfterInSecondFile: string
         textInFirstFile: string
         textInSecondFile: string
     }[]

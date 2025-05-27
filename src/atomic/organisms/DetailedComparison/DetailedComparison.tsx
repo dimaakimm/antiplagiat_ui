@@ -99,12 +99,18 @@ const DetailedComparison: React.FC<FirstRepositoryProps> = ({
                                                     dType="r14"
                                                     className={styles.tileLabel}
                                                 >
-                                                    {match.firstFileName} [
-                                                    {tile.startLineInFirstFile}{' '}
-                                                    - {tile.endLineInFirstFile}]
+                                                    {match.firstFileName}
                                                 </Typography>
                                                 <pre className={styles.code}>
-                                                    {tile.textInFirstFile}
+                                                    {tile.textBeforeInFirstFile}
+                                                    <span
+                                                        className={
+                                                            styles.highlighted
+                                                        }
+                                                    >
+                                                        {tile.textInFirstFile}
+                                                    </span>
+                                                    {tile.textAfterInFirstFile}
                                                 </pre>
                                             </div>
                                             <div className={styles.tileSection}>
@@ -112,13 +118,18 @@ const DetailedComparison: React.FC<FirstRepositoryProps> = ({
                                                     dType="r14"
                                                     className={styles.tileLabel}
                                                 >
-                                                    {match.secondFileName} [
-                                                    {tile.startLineInFirstFile}{' '}
-                                                    - {tile.endLineInSecondFile}
-                                                    ]
+                                                    {match.secondFileName}
                                                 </Typography>
                                                 <pre className={styles.code}>
-                                                    {tile.textInSecondFile}
+                                                    {tile.textBeforeInFirstFile}
+                                                    <span
+                                                        className={
+                                                            styles.highlighted
+                                                        }
+                                                    >
+                                                        {tile.textInSecondFile}
+                                                    </span>
+                                                    {tile.textAfterInSecondFile}
                                                 </pre>
                                             </div>
                                         </div>
